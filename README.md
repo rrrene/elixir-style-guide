@@ -5,7 +5,7 @@
 There are two reasons for this document to exist:
 
 - It is my personal style guide and consists both of the way I write Elixir today, but more importantly of things I've seen in the wild and adapted because they make Elixir more readable for open source Alchemists everywhere.
-- Secondly, it is the [basis for Credo](https://github.com/rrrene/elixir_style_guide) and reflects the principles promoted by its code analysis.
+- Secondly, it is the [basis for Credo](https://github.com/rrrene/credo) and reflects the principles promoted by its code analysis.
 
 Like all of my work, this style guide stands on the shoulders of giants: It is influenced by the Ruby style guides by [bbatsov](https://github.com/bbatsov/ruby-style-guide) and [GitHub](https://github.com/styleguide/ruby) as well as more [public](http://elixir.community/styleguide) [attempts](https://github.com/niftyn8/elixir_style_guide) at Elixir Style Guides.
 
