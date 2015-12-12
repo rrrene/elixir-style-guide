@@ -301,7 +301,7 @@ If you want to add to this document, please submit a pull request or open an iss
 
 ### Documentation
 
-* First, try to see documentation in a positive light. It is not a choir that you put off for as long as possible (forever). At some point in your project, starting to document parts of your project is an opportunity to communicate important things with future-maintainers, potential users of your API and even your future self.
+* First, try to see documentation in a positive light. It is not a chore that you put off for as long as possible (forever). At some point in your project, starting to document parts of your project is an opportunity to communicate important things with future-maintainers, potential users of your API and even your future self.
 
 * When that point in time comes, every module and function should either be documented or marked via `@moduledoc false`/`@doc false` to indicate that there is no intent to document the object in question.
 
