@@ -44,7 +44,7 @@ If you want to add to this document, please submit a pull request or open an iss
   # preferred way
   Helper.format({1, true, 2}, :my_atom)
 
-  # also okay - choose a style and use it consistently
+  # also okay - carefully choose a style and use it consistently
   Helper.format( { 1, true, 2 }, :my_atom )
   ```
 
@@ -95,64 +95,55 @@ If you want to add to this document, please submit a pull request or open an iss
 * Generally use vertical-space to improve readability of sections of your code.
 
   ```elixir
-  # who can guess what this function does?
+  # it is preferred to employ a mixture of parentheses, descriptive variable
+  # names and vertical white space to improve readability
 
   def run(%SourceFile{} = source_file, params \\ []) do
-    UnusedFunctionReturnHelper.find_unused_calls(source_file, params, [:String], nil)
-    |> Enum.reduce all_unused_calls, [], fn {_, meta, _} = invalid_call, issues ->
+    source_file
+    |> Helper.find_unused_calls(params, [:String], nil)
+    |> Enum.reduce([], &add_to_issues/2)
+  end
+
+  defp add_to_issues(invalid_call, issues) do
+    {trigger, meta, _} = invalid_call
+    issues ++ [issue(meta[:line], trigger, source_file)]
+  end
+
+  # this function does the same as above, but is less comprehensible
+
+  def run(%SourceFile{} = source_file, params \\ []) do
+    Helper.find_unused_calls(source_file, params, [:String], nil)
+    |> Enum.reduce [], fn {_, meta, _} = invalid_call, issues ->
       trigger = invalid_call |> Macro.to_string |> String.split("(") |> List.first
       issues ++ [issue(meta[:line], trigger, source_file)]
     end
   end
 
-  # employ a mixture of parentheses, variables and vertical white space to
-  # improve readability (and subsequently discover refactoring opportunities)
-
-  def run(%SourceFile{} = source_file, params \\ []) do
-    all_unused_calls =
-      source_file
-      |> UnusedFunctionReturnHelper.find_unused_calls(params, [:String], nil)
-
-    all_unused_calls
-    |> Enum.reduce([], fn(invalid_call, issues) ->
-        {_, meta, _} = invalid_call
-
-        trigger =
-          invalid_call
-          |> Macro.to_string
-          |> String.split("(")
-          |> List.first
-
-        issues ++ [issue(meta[:line], trigger, source_file)]
-      end)
-  end
   ```
 
 * It is **preferred** to start pipe chains with a "pure" value rather than a function call.
 
   ```elixir
-  # While this is technically fine ...
-
-  String.strip(username)
-  |> String.downcase
-
-  # ... this seems to be more readable, due to the clear flow of data:
-
+  # preferred way - this is very readable due to the clear flow of data
   username
   |> String.strip
   |> String.downcase
+
+  # also okay - but often slightly less readable
+  String.strip(username)
+  |> String.downcase
   ```
 
-* When assigning to a multi-line call, begin a new line after the `=`. Indent the assigned value's calculation by one level. This is the **preferred** way, ...
+* When assigning to a multi-line call, begin a new line after the `=`. Indent the assigned value's calculation by one level. This is the **preferred** way.
 
   ```elixir
+  # preferred way
   result =
     lines
     |> Enum.map(&tabs_or_spaces/1)
     |> Enum.uniq
 
-  # while another variant is to align the first assignment and subsequent lines.
-
+  # also okay - align the first assignment and subsequent lines
   result = lines
            |> Enum.map(&tabs_or_spaces/1)
            |> Enum.uniq
@@ -161,25 +152,22 @@ If you want to add to this document, please submit a pull request or open an iss
 * Add underscores to large numbers for better readability.
 
   ```elixir
-  # bad - how many zeros are there?
-  num = 10000000
-
-  # good - much easier to read
+  # preferred way - very easy to read
   num = 10_000_000
+
+  # NOT okay - how many zeros are there?
+  num = 10000000
   ```
 
-
-* Use `def`, `defp`, and `defmacro` with parentheses when the function takes parameters. Omit the parentheses when the function doesn't accept any parameters.
+* Use `def`, `defp`, and `defmacro` with parentheses when the function takes parameters. Omit the parentheses when the function doesn't accept any parameters. This is the **preferred** way.
 
   ```elixir
-  # omit parentheses for functions without parameters
-
+  # preferred way - omit parentheses for functions without parameters
   def time do
     # ...
   end
 
   # use parentheses if parameters are present
-
   def convert(x, y) do
     # ...
   end
@@ -188,24 +176,26 @@ If you want to add to this document, please submit a pull request or open an iss
 * Most of the time when calling functions that take parameters, it is **preferred** to use parentheses.
 
   ```elixir
-  # While this is super cool when new to the `&` special form and `fn` ...
+  # preferred way - the more boring forms are preferred since it's easier to see what goes where
+  Enum.reduce(1..100, 0, &(&1 + &2))
+
+  Enum.reduce(1..100, 0, fn(x, acc) ->
+    x + acc
+  end)
+
+  # also okay - carefully choose a style and use it consistently
   Enum.reduce 1..100, 0, & &1 + &2
 
   Enum.reduce 1..100, 0, fn x, acc ->
     x + acc
   end
 
-  # the more boring forms are preferred since it's easier to see what goes where
-  Enum.reduce(1..100, 0, &(&1 + &2))
-
-  Enum.reduce(1..100, 0, fn(x, acc) ->
-    x + acc
-  end)
   ```
 
 * For macros we see the contrary behaviour. The **preferred** way is to not use parentheses.
 
   ```elixir
+  # preferred way
   defmodule MyApp.Service.TwitterAPI do
     use MyApp.Service, social: true
 
@@ -214,6 +204,18 @@ If you want to add to this document, please submit a pull request or open an iss
   ```
 
 * Conclusively, never use parentheses around the condition of `if` or `unless` (since they are macros as well).
+
+  ```elixir
+  # preferred way
+  if valid?(username) do
+    # ...
+  end
+
+  # NOT okay
+  if( valid?(username) ) do
+    # ...
+  end
+  ```
 
 #### Naming
 
@@ -224,28 +226,37 @@ If you want to add to this document, please submit a pull request or open an iss
   defmodule MyApp.HTTPService do
   end
 
-  # also okay - choose a style and use it consistently
+  # also okay - carefully choose a style and use it consistently
   defmodule MyApp.HttpService do
   end
   ```
 
 * Use snake_case for module attribute, function, macro and variable names.
 
+  ```elixir
+  # preferred way
+  defmodule MyApp.HTTPService do
+    @some_setting :my_value
+
+    def my_function(param_value) do
+      variable_value1 = "test"
+    end
+  end
+
+  # NOT okay
+  defmodule MyApp.HTTPService do
+    @someSetting :my_value
+
+    def myFunction(paramValue) do
+      variableValue1 = "test"
+    end
+  end
+  ```
+
 * Exception names should have a common prefix or suffix. While this can be anything you like, esp. for small libraries, a common choice seems to have all of them end in `Error`.
 
   ```elixir
-  # bad - there is no common naming scheme for exceptions
-
-  defmodule InvalidHeader do
-    defexception [:message]
-  end
-
-  defmodule RequestFailed do
-    defexception [:message]
-  end
-
-  # good - common suffix Error
-
+  # preferred way - common suffix Error
   defmodule BadHTTPHeaderError do
     defexception [:message]
   end
@@ -254,13 +265,21 @@ If you want to add to this document, please submit a pull request or open an iss
     defexception [:message]
   end
 
-  # still okay - consistent prefix Invalid
-
+  # also okay - consistent prefix Invalid
   defmodule InvalidHTTPHeader do
     defexception [:message]
   end
 
   defmodule InvalidUserRequest do
+    defexception [:message]
+  end
+
+  # bad - there is no common naming scheme for exceptions
+  defmodule InvalidHeader do
+    defexception [:message]
+  end
+
+  defmodule RequestFailed do
     defexception [:message]
   end
   ```
@@ -269,7 +288,31 @@ If you want to add to this document, please submit a pull request or open an iss
 
   For functions, they should end in a question mark.
 
+  ```elixir
+  # preferred way
+  def valid?(username) do
+    # ...
+  end
+
+  # NOT okay
+  def is_valid?(username) do
+    # ...
+  end
+  ```
+
   For guard-safe macros they should have the prefix `is_` and not end in a question mark.
+
+  ```elixir
+  # preferred way
+  defmacro is_valid(username) do
+    # ...
+  end
+
+  # NOT okay
+  defmacro valid?(username) do
+    # ...
+  end
+  ```
 
 
 
@@ -280,20 +323,29 @@ If you want to add to this document, please submit a pull request or open an iss
   Example: Don't automatically use `~S` just because there is *one* `"` in your string, but start using it when you would have to escape a lot of double-quotes.
 
   ```elixir
-  # bad
-
-  legend = ~S{single quote ('), double quote (")}
-  html = "<a href=\"http://elixir-lang.org\" rel=\"external\">Click here</a>"
-
-  # good
-
+  # preferred way - use normal quotes even if one has to be escaped
   legend = "single quote ('), double quote (\")"
-  html = ~S(<a href="http://elixir-lang.org" rel="external">Click here</a>)
+
+  # use sigils when you would have to escape several quotes otherwise
+  html = ~S(<a href="http://elixir-lang.org" target="_blank" rel="external">Homepage</a>)
+
+  # also okay, but not preferred - important: choose a common sigil and stick with it
+  # avoid using ~S{} in one place while using ~S(), ~S[] and ~S<> in others
+  legend = ~S{single quote ('), double quote (")}
+  html = "<a href=\"http://elixir-lang.org\" target=\"_blank\" rel=\"external\">Homepage</a>"
   ```
 
 #### Regular Expressions
 
 * Use `~r//` as your "go-to sigil" when it comes to Regexes as they are the easiest to read for people new to Elixir. That said, feel free to use other `~r` sigils when you have several slashes in your expression.
+
+  ```elixir
+  # preferred way - use slashes because they are familiar regex delimiters
+  regex = ~r/\d+/
+
+  # use sigils when you would have to escape several quotes otherwise
+  regex = ~r{http://elixir-lang.org/getting-started/mix-otp/(.+).html}
+  ```
 
 * Be careful with ^ and $ as they match start/end of line, not string endings. If you want to match the whole string use: \A and \z.
 
@@ -309,9 +361,50 @@ If you want to add to this document, please submit a pull request or open an iss
 
 * As for style, put an empty line after `@moduledoc`. Don't put an empty line between `@doc` and its function/macro definition.
 
+  ```elixir
+  defmodule MyApp.HTTPService do
+    @moduledoc false
+
+    @doc "Sends a POST request to the given `url`."
+    def post(url) do
+      # ...
+    end
+  end
+  ```
+
 * Although Elixir favors `@moduledoc` and `@doc` as first-class citizens, don't be afraid to communicate via normal code comments as well. But remember: don't use this to explain bad code!
 
-* Put longer, more descriptive comments on their own line rather than at the end of a line of code.
+  ```elixir
+  # preferred way - provide useful additional information
+  defmodule Credo.Issue do
+    defstruct category:     nil,
+              message:      nil,
+              filename:     nil,
+              line_no:      nil,
+              column:       nil,
+              trigger:      nil,  # optional: the call that triggered the issue
+              metadata:     [],   # optional: filled in by the failing check
+  end
+
+  # NOT okay - "explaining" confusing code and ambiguous names
+  defmodule AbstractCredoIssueInterfaceFactory do
+    def build(input, params \\ []) do
+      Helper.find_values(input, params) # input is either a username or pid
+      |> Enum.reduce %{}, fn {_, meta, _} = value, list ->
+        if valid?(value) do
+          case Map.get(list, :action) do # remember: list is a map!!!!111
+            nil -> nil # why does this break sometimes?
+            val -> Map.put(list, val, true)
+          end
+        else
+          list
+        end
+      end
+    end
+  end
+  ```
+
+* If necessary, put longer, more descriptive comments on their own line rather than at the end of a line of code.
 
 
 
@@ -321,27 +414,7 @@ If you want to add to this document, please submit a pull request or open an iss
 * Never nest `if`, `unless`, and `case` more than 1 time. If your logic demands it, spread it over multiple functions.
 
   ```elixir
-  # While this does compile ...
-
-  defp perform_task(valid, hash, config) do
-    if valid do
-      case Map.get(hash, :action) do
-        :create ->
-          # ...
-        :delete ->
-          if sid do   # <-- we reach three levels of nesting here :(
-            # ...
-          else
-            # ...
-          end
-        nil ->
-          nil
-      end
-    end
-  end
-
-  # ... it will be easier for your future-self to understand this:
-
+  # preferred way
   defp perform_task(false, hash, config) do
     nil
   end
@@ -364,46 +437,60 @@ If you want to add to this document, please submit a pull request or open an iss
       # ...
     end
   end
+
+  # NOT okay - rule of thumb: it starts to hurt at 3 levels of nesting
+  defp perform_task(valid, hash, config) do
+    if valid do
+      case Map.get(hash, :action) do
+        :create ->
+          # ...
+        :delete ->
+          if sid do   # <-- we reach three levels of nesting here :(
+            # ...
+          else
+            # ...
+          end
+        nil ->
+          nil
+      end
+    end
+  end
+
   ```
 
 * Never use `unless` with else. Rewrite these with `if`, putting the positive case first.
 
   ```elixir
-  # So while this is fine:
-
+  # without an else block:
   unless allowed? do
     raise "Not allowed!"
   end
 
-  # This should be refactored:
-
-  unless allowed? do
-    raise "Not allowed!"
-  else
-    proceed_as_planned
-  end
-
-  # to look like this:
-
+  # preferred way to "add" an `else` block here: rewrite using `if`
   if allowed? do
     proceed_as_planned
   else
     raise "Not allowed!"
+  end
+
+  # NOT okay
+  unless allowed? do
+    raise "Not allowed!"
+  else
+    proceed_as_planned
   end
   ```
 
 * Never use `unless` with a negated expression as condition. Rewrite with `if`.
 
   ```elixir
-  # The code in this example ...
-
-  unless !allowed? do
+  # preferred way
+  if allowed? do
     proceed_as_planned
   end
 
-  # ... should be refactored to look like this:
-
-  if allowed? do
+  # NOT okay - rewrite using `if`
+  unless !allowed? do
     proceed_as_planned
   end
   ```
