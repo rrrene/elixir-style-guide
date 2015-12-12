@@ -36,6 +36,10 @@ If you want to add to this document, please submit a pull request or open an iss
 
 * Use line-endings consistently (Unix-style line endings are **preferred**, but we should not exclude our brothers and sisters riding the Redmond dragon).
 
+* Don't leave trailing white-space at the end of a line.
+
+* End each file with a newline (some editors don't do this by default).
+
 * Use spaces around operators and after commas.
 
 * Don't use spaces after `(`, `[`, and `{` or before `}`, `]`, and `)`. This is the **preferred** way, although other styles are possible, as long as they are applied consistently.
@@ -49,10 +53,6 @@ If you want to add to this document, please submit a pull request or open an iss
   ```
 
 * Keep lines fewer than 80 characters whenever possible, although this is not a strict rule.
-
-* Don't leave trailing white-space at the end of a line.
-
-* End each file with a newline (some editors don't do this by default).
 
 * Don't use `;` to separate statements and expressions.
 
@@ -523,7 +523,7 @@ If you want to add to this document, please submit a pull request or open an iss
   end
   ```
 
-* The thinking behind this is that you can see the dependencies of your module at a glance. So if you are attempting to build a medium to large project, **this can help you to get your boundaries/layers/contracts right**.
+  The thinking behind this is that you can see the dependencies of your module at a glance. So if you are attempting to build a medium to large project, **this can help you to get your boundaries/layers/contracts right**.
 
 
 
