@@ -1,0 +1,13 @@
+%{"anubis": {:hex, :anubis, "0.1.0"},
+  "calliope": {:hex, :calliope, "0.3.0"},
+  "chronos": {:hex, :chronos, "0.3.9"},
+  "cowboy": {:hex, :cowboy, "1.0.4"},
+  "cowlib": {:hex, :cowlib, "1.0.2"},
+  "earmark": {:hex, :earmark, "0.1.19"},
+  "meck": {:hex, :meck, "0.8.4"},
+  "mock": {:hex, :mock, "0.1.1"},
+  "obelisk": {:hex, :obelisk, "0.10.0"},
+  "plug": {:hex, :plug, "0.11.3"},
+  "ranch": {:hex, :ranch, "1.2.1"},
+  "rss": {:hex, :rss, "0.2.1"},
+  "yamerl": {:git, "https://github.com/yakaz/yamerl.git", "ae810a808817d9482b4628ae3e20d746e3729fe0", []}}
