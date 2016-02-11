@@ -1,4 +1,4 @@
-# Elixir Style Guide
+# [Credo](https://github.com/rrrene/credo)'s Elixir Style Guide
 
 ## Prelude
 
