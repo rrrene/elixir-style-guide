@@ -500,8 +500,31 @@ If you want to add to this document, please submit a pull request or open an iss
 
 ### Software Design
 
-* When developing applications, try to alias all used modules. This improves readability and makes it easier to reason about the dependencies of a module inside your project. There are obvious exceptions for modules from Elixir's stdlib (e.g. `IO.ANSI`) or if you're submodule has a name identical to an existing name (e.g. don't alias `YourProject.List` because that would override `List`). Like most other points in this guide, this is just a suggestion, not a strict rule.
+* Use `FIXME:` to mark issues/bugs inside your code.
 
+  ```elixir
+  defmodule MyApp do
+    # FIXME: this breaks for x > 1000
+    def calculate(x) do
+      # ...
+    end
+  end
+  ```
+
+* Use `TODO` to plan changes to your code.
+
+  ```elixir
+  defmodule MyApp do
+    # TODO: rename into something more clear
+    def generic_function_name do
+      # ...
+    end
+  end
+  ```
+  
+  This way tools have a chance to find and report both `FIXME:` and `TODO:` comments.
+
+* When developing applications, try to alias all used modules. This improves readability and makes it easier to reason about the dependencies of a module inside your project. There are obvious exceptions for modules from Elixir's stdlib (e.g. `IO.ANSI`) or if you're submodule has a name identical to an existing name (e.g. don't alias `YourProject.List` because that would override `List`). Like most other points in this guide, this is just a suggestion, not a strict rule.
 
   ```elixir
   # While this is completely fine:
