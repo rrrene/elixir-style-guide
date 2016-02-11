@@ -500,7 +500,7 @@ If you want to add to this document, please submit a pull request or open an iss
 
 ### Software Design
 
-* Use `FIXME:` to mark issues/bugs inside your code.
+* Use `FIXME:` comments to mark issues/bugs inside your code.
 
   ```elixir
   defmodule MyApp do
@@ -511,7 +511,7 @@ If you want to add to this document, please submit a pull request or open an iss
   end
   ```
 
-* Use `TODO` to plan changes to your code.
+* Use `TODO:` comments to plan changes to your code.
 
   ```elixir
   defmodule MyApp do
