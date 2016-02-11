@@ -554,7 +554,7 @@ If you want to add to this document, please submit a pull request or open an iss
 
 * Never leave a call to `IEx.pry` in production code.
 
-* Be vary of calls to `IO.inspect` in production code. If you want to actually log useful information for later debugging, use Logger instead.
+* Be vary of calls to `IO.inspect` in production code. If you want to actually log useful information for later debugging, use a combination of `Logger` and `&inspect/1` instead.
 
 * Conditionals should never contain an expression that always evaluates to the same value (such as `true`, `false`, `x == x`). They are most likely leftovers from a debugging session.
 
