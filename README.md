@@ -554,13 +554,13 @@ If you want to add to this document, please submit a pull request or open an iss
 
 * Never leave a call to `IEx.pry` in production code.
 
-* Be vary of calls to `IO.inspect` in production code. If you want to actually log useful information for later debugging, use a combination of `Logger` and `&inspect/1` instead.
+* Be wary of calls to `IO.inspect` in production code. If you want to actually log useful information for later debugging, use a combination of `Logger` and `&inspect/1` instead.
 
 * Conditionals should never contain an expression that always evaluates to the same value (such as `true`, `false`, `x == x`). They are most likely leftovers from a debugging session.
 
-* Be vary to name variables and functions the same as functions defined in `Kernel`, especially in cases where the function has arity 0.
+* Be wary of naming variables and functions the same as functions defined in `Kernel`, especially in cases where the function has arity 0.
 
-* Be vary to name modules the same as modules in the stdlib. Sometimes `YourProject.DataTypeString` is a less error-prone choice as the seemingly cleaner `YourProject.DataType.String` because aliasing the later in a module makes the *normal* `String` module unavailable.
+* Be wary of naming modules the same as modules in the stdlib. Sometimes `YourProject.DataTypeString` is a less error-prone choice as the seemingly cleaner `YourProject.DataType.String` because aliasing the later in a module makes the *normal* `String` module unavailable.
 
 
 
