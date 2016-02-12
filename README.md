@@ -16,7 +16,7 @@ Like all of my work, this style guide stands on the shoulders of giants: It is i
 Contrary to other guides I've seen, this one is not very dogmatic. The overall principles are
 
 * be consistent in your choices (i.e. apply the same rules everywhere),
-* care about the readibility of your code (e.g. when in doubt, spread text vertically rather than horizontally),
+* care about the readability of your code (e.g. when in doubt, spread text vertically rather than horizontally),
 * and care about easier maintenance (avoid confusing names, etc.).
 
 This is especially important because we are such a young community. All the **code we put out there is worth its weight in gold** if it is easy to comprehend and invites people to learn and contribute.
