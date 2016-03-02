@@ -1,4 +1,4 @@
-# [Credo](https://github.com/rrrene/credo)'s Elixir Style Guide
+# [Credo](https://github.com/rrrene/credo)'s Elixir Style Guide [![Deps Status](https://beta.hexfaktor.org/badge/all/github/rrrene/elixir-style-guide.svg)](https://beta.hexfaktor.org/github/rrrene/elixir-style-guide)
 
 ## Prelude
 
