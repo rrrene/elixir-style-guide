@@ -75,7 +75,7 @@ If you want to add to this document, please submit a pull request or open an iss
   denied = ! allowed?
   ```
 
-* Group function definitions. Keep the same function with different signatures together without separating blank lines. In all other cases, use blank lines to separate different functions/parts of your module (to maximze readability through "vertical white-space").
+* Group function definitions. Keep the same function with different signatures together without separating blank lines. In all other cases, use blank lines to separate different functions/parts of your module (to maximize readability through "vertical white-space").
 
   ```elixir
   defp find_properties(source_file, config) do
