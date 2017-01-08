@@ -600,7 +600,7 @@ If you want to add to this document, please submit a pull request or open an iss
   This way tools have a chance to find and report both `FIXME:` and `TODO:` comments.
 
 * <a name="alias-modules"></a>
-  When developing applications, try to alias all used modules. This improves readability and makes it easier to reason about the dependencies of a module inside your project. There are obvious exceptions for modules from Elixir's stdlib (e.g. `IO.ANSI`) or if you're submodule has a name identical to an existing name (e.g. don't alias `YourProject.List` because that would override `List`). Like most other points in this guide, this is just a suggestion, not a strict rule.
+  When developing applications, try to alias all used modules. This improves readability and makes it easier to reason about the dependencies of a module inside your project. There are obvious exceptions for modules from Elixir's stdlib (e.g. `IO.ANSI`) or if your submodule has a name identical to an existing name (e.g. don't alias `YourProject.List` because that would override `List`). Like most other points in this guide, this is just a suggestion, not a strict rule.
   <sup>[[link](#alias-modules)]</sup>
 
   ```elixir
