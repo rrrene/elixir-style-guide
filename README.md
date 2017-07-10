@@ -103,8 +103,7 @@ If you want to add to this document, please submit a pull request or open an iss
   end
 
   defp property_for(source_file, _config) do
-    lines
-    |> Enum.map(&tabs_or_spaces/1)
+    Enum.map(lines, &tabs_or_spaces/1)
   end
 
   defp tabs_or_spaces({_, "\t" <> line}), do: :tabs
@@ -128,6 +127,7 @@ If you want to add to this document, please submit a pull request or open an iss
 
   defp add_to_issues(invalid_call, issues) do
     {trigger, meta, _} = invalid_call
+
     issues ++ [issue(meta[:line], trigger, source_file)]
   end
 
@@ -396,7 +396,7 @@ If you want to add to this document, please submit a pull request or open an iss
   ```
 
 * <a name="caret-and-dollar-regex"></a>
-  Be careful with ^ and $ as they match start/end of line, not string endings. If you want to match the whole string use: \A and \z.
+  Be careful with `^` and `$` as they match start/end of line, not string endings. If you want to match the whole string use: `\A` and `\z`.
   <sup>[[link](#caret-and-dollar-regex)]</sup>
 
 
