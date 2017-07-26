@@ -45,7 +45,7 @@ If you want to add to this document, please submit a pull request or open an iss
   <sup>[[link](#no-trailing-whitespace)]</sup>
 
 * <a name="newline-eof"></a>
-  End each file with a newline (some editors don't do this by default).
+  End each file with a newline (some editors [don't do this by default](https://robots.thoughtbot.com/no-newline-at-end-of-file)).
   <sup>[[link](#newline-eof)]</sup>
 
 * <a name="spaces-operators"></a>
