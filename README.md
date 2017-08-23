@@ -646,7 +646,7 @@ If you want to add to this document, please submit a pull request or open an iss
   <sup>[[link](#kernel-functions)]</sup>
 
 * <a name="stdlib-modules"></a>
-  Be wary of naming modules the same as modules in the stdlib. Sometimes `YourProject.DataTypeString` is a less error-prone choice as the seemingly cleaner `YourProject.DataType.String` because aliasing the later in a module makes the *normal* `String` module unavailable.
+  Be wary of naming modules the same as modules in the stdlib. Sometimes `YourProject.DataTypeString` is a less error-prone choice as the seemingly cleaner `YourProject.DataType.String` because aliasing the latter in a module makes the *normal* `String` module unavailable.
   <sup>[[link](#stdlib-modules)]</sup>
 
 
