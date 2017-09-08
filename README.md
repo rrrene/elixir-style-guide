@@ -64,6 +64,34 @@ If you want to add to this document, please submit a pull request or open an iss
   Helper.format( { 1, true, 2 }, :my_atom )
   ```
 
+* <a name="multiline-list-like-declaration-and-assignment"></a>
+  When declaring or assigning a multiline list-like expression, choose one style and use it consistently.
+  <sup>[[link](#multiline-list-like-declaration-and-assignment)]</sup>
+  
+  ```elixir
+  # Case 1, OK
+  [
+    %{id: 1, title: "a"},
+    %{id: 2, title: "b"},
+    %{id: 3, title: "c"}
+  ]
+
+  list = 
+    [
+      %{id: 1, title: "a"},
+      %{id: 2, title: "b"},
+      %{id: 3, title: "c"}
+    ]
+
+  # Case 2, also OK
+  [%{id: 1, title: "a"}, %{id: 2, title: "b"},
+   %{id: 3, title: "c"}, %{id: 4, title: "d"}]
+ 
+  list =
+    [%{id: 1, title: "a"}, %{id: 2, title: "b"},
+     %{id: 3, title: "c"}, %{id: 4, title: "d"}]
+  ```
+  
 * <a name="character-per-line-limit"></a>
   Keep lines fewer than 80 characters whenever possible, although this is not a strict rule.
   <sup>[[link](#character-per-line-limit)]</sup>
